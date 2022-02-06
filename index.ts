@@ -11,26 +11,26 @@ const client = new DiscordJS.Client({
 
 client.on('ready', () => {
     console.log('The bot is ready')
-    const guildId ='862332424288731137'
+    const guildId = '862332424288731137'
     const guild = client.guilds.cache.get(guildId)
 
     let commands
 
     if (guild) {
         commands = guild.commands
-    }else{
+    } else {
         commands = client.application?.commands
     }
 
     commands?.create({
         name: 'ping',
-        description:'Replies with pong.',
+        description: 'Replies with pong.',
     });
 
     commands?.create({
         name: 'add',
-        description:"adds two number",
-        options : [
+        description: "adds two number",
+        options: [
             {
                 name: 'num1',
                 description: ' da first',
@@ -45,21 +45,35 @@ client.on('ready', () => {
                 type: DiscordJS.Constants.ApplicationCommandOptionTypes.NUMBER,
 
             }
-                
+
         ]
     })
 
-    
+
 })
 
-function removeVN(str:string) {
-    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
-    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
-    str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
-    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
-    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
-    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
-    str = str.replace(/đ/g,"d");
+// Calc jail time left
+
+const outTime = new Date("Nov 13, 2029 15:37:25").getTime();
+let now = new Date().getTime();
+
+let distance = outTime - now;
+var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+// Remove accents
+
+function removeVN(str: string) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
     str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
     str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
     str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
@@ -73,37 +87,37 @@ function removeVN(str:string) {
     str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
     // Remove extra spaces
     // Bỏ các khoảng trắng liền nhau
-    str = str.replace(/ + /g," ");
+    str = str.replace(/ + /g, " ");
     str = str.trim();
     // Remove punctuations
     // Bỏ dấu câu, kí tự đặc biệt
-    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
+    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
     return str;
 }
 
 // Messages
 client.on('messageCreate', (message) => {
-    let mes:string = message.content.toLowerCase()
-    const mess:string = removeVN(mes)
-    if (mess === 'ping' ){
+    let mes: string = message.content.toLowerCase()
+    const mess: string = removeVN(mes)
+    if (mess === 'ping') {
         message.reply({
             content: 'pongggg',
         })
-    }else if (mess.includes('time')){
+    } else if (mess.includes('time') || mess.includes('taim')) {
         message.reply({
-            content:'ɪᴛs ʀᴀᴍᴍᴍᴍᴍᴍ ᴛɪᴍᴇᴇᴇᴇᴇ',
+            content: 'ɪᴛs ʀᴀᴍᴍᴍᴍᴍᴍ ᴛɪᴍᴇᴇᴇᴇᴇ',
         })
-        
-    }else if (mess.includes('banh')){
+
+    } else if (mess.includes('banh') && mess.includes('chui')) {
         message.reply({
-            content:'dm banh',
+            content: 'dm banh',
         })
-        
-    }else if (mess.includes('check')){
+
+    } else if (mess.includes('tu')) {
         message.reply({
-            content: mess,
+            content: `dm bảnh ngu ${days} ɴɢàʏ ɴữᴀ ʀᴀ ᴛù`,
         })
-        
+
     }
 })
 
@@ -119,7 +133,7 @@ client.on('interactionCreate', async (interaction) => {
         interaction.reply({
             content: 'pong',
         })
-    }else if (commandName === 'add'){
+    } else if (commandName === 'add') {
         const num1 = options.getNumber('num1') || 0;
         const num2 = options.getNumber('num2') || 0;
         const sum = num1 + num2;
@@ -127,7 +141,7 @@ client.on('interactionCreate', async (interaction) => {
         interaction.reply({
             content: `and the sum is ${sum}`
         })
-        
+
     }
 })
 
